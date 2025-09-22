@@ -5,14 +5,21 @@ export const connectDB = async () => {
         // Get MongoDB URI from environment variables
         const mongoURI = process.env.MONGO_URI || process.env.MONGO_URL;
         
+        console.log('🔍 Attempting to connect to MongoDB...');
+        console.log('MongoDB URI exists:', !!mongoURI);
+        
         if (!mongoURI) {
             throw new Error('MongoDB URI is not defined in environment variables');
         }
 
-        // Connect to MongoDB with proper options
+        // Enhanced connection options for serverless
         const connection = await mongoose.connect(mongoURI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
+            serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+            socketTimeoutMS: 45000, // Close sockets after 45s
+            bufferCommands: false, // Disable mongoose buffering
+            bufferMaxEntries: 0 // Disable mongoose buffering
         });
 
         console.log(`✅ MongoDB Connected: ${connection.connection.host}`);
@@ -36,6 +43,8 @@ export const connectDB = async () => {
         
     } catch (error) {
         console.error('❌ MongoDB connection failed:', error.message);
-        process.exit(1);
+        console.error('Full error:', error);
+        // Don't exit in serverless environment, just throw the error
+        throw error;
     }
 };
