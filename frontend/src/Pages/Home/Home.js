@@ -14,7 +14,11 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import BarChartIcon from "@mui/icons-material/BarChart";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import Analytics from "./Analytics";
+import BudgetTracker from "../../components/BudgetTracker";
+import DashboardWidgets from "../../components/DashboardWidgets";
+import NotificationSystem from "../../components/NotificationSystem";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -39,6 +43,8 @@ const Home = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [view, setView] = useState("table");
+  const [showBudgets, setShowBudgets] = useState(false);
+  const [budgets, setBudgets] = useState({});
 
   const handleStartChange = (date) => {
     setStartDate(date);
@@ -176,6 +182,35 @@ const Home = () => {
     setView("chart");
   };
 
+  const handleBudgetClick = (e) => {
+    setShowBudgets(!showBudgets);
+  };
+
+  const handleExportData = () => {
+    const dataToExport = {
+      user: cUser?.username || 'User',
+      exportDate: new Date().toISOString(),
+      transactions: transactions,
+      summary: {
+        totalTransactions: transactions.length,
+        totalIncome: transactions.filter(t => t.transactionType === 'credit').reduce((sum, t) => sum + t.amount, 0),
+        totalExpenses: transactions.filter(t => t.transactionType === 'expense').reduce((sum, t) => sum + t.amount, 0)
+      }
+    };
+
+    const dataStr = JSON.stringify(dataToExport, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+    
+    const exportFileDefaultName = `FinanceFlow_Export_${new Date().toISOString().split('T')[0]}.json`;
+    
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+    
+    toast.success('Data exported successfully! 📊', toastOptions);
+  };
+
   return (
     <>
       <Header />
@@ -198,6 +233,7 @@ const Home = () => {
                     name="frequency"
                     value={frequency}
                     onChange={handleChangeFrequency}
+                    className="custom-form-select"
                   >
                     <option value="7">Last Week</option>
                     <option value="30">Last Month</option>
@@ -214,6 +250,7 @@ const Home = () => {
                     name="type"
                     value={type}
                     onChange={handleSetType}
+                    className="custom-form-select"
                   >
                     <option value="all">All</option>
                     <option value="expense">Expense</option>
@@ -237,14 +274,25 @@ const Home = () => {
                     view === "chart" ? "iconActive" : "iconDeactive"
                   }`}
                 />
+                <TrendingUpIcon
+                  sx={{ cursor: "pointer" }}
+                  onClick={handleBudgetClick}
+                  className={`${
+                    showBudgets ? "iconActive" : "iconDeactive"
+                  }`}
+                  title="Budget Tracker"
+                />
               </div>
 
-              <div>
-                <Button onClick={handleShow} className="addNew">
-                  Add New
+              <div className="action-buttons">
+                <Button onClick={handleShow} className="addNew custom-add-btn">
+                  ✨ Add New
                 </Button>
-                <Button onClick={handleShow} className="mobileBtn">
+                <Button onClick={handleShow} className="mobileBtn custom-add-btn">
                   +
+                </Button>
+                <Button onClick={handleExportData} className="export-btn">
+                  📥 Export
                 </Button>
                 <Modal show={show} onHide={handleClose} centered>
                   <Modal.Header closeButton>
@@ -281,17 +329,22 @@ const Home = () => {
                           value={values.category}
                           onChange={handleChange}
                         >
-                          <option value="">Choose...</option>
-                          <option value="Groceries">Groceries</option>
-                          <option value="Rent">Rent</option>
-                          <option value="Salary">Salary</option>
-                          <option value="Tip">Tip</option>
-                          <option value="Food">Food</option>
-                          <option value="Medical">Medical</option>
-                          <option value="Utilities">Utilities</option>
-                          <option value="Entertainment">Entertainment</option>
-                          <option value="Transportation">Transportation</option>
-                          <option value="Other">Other</option>
+                          <option value="">Choose Category...</option>
+                          <option value="🛒 Groceries">🛒 Groceries</option>
+                          <option value="🏠 Rent">🏠 Rent</option>
+                          <option value="💰 Salary">💰 Salary</option>
+                          <option value="💡 Utilities">💡 Utilities</option>
+                          <option value="🍕 Food & Dining">🍕 Food & Dining</option>
+                          <option value="🏥 Healthcare">🏥 Healthcare</option>
+                          <option value="🎬 Entertainment">🎬 Entertainment</option>
+                          <option value="🚗 Transportation">🚗 Transportation</option>
+                          <option value="🎓 Education">🎓 Education</option>
+                          <option value="👕 Shopping">👕 Shopping</option>
+                          <option value="✈️ Travel">✈️ Travel</option>
+                          <option value="📱 Technology">📱 Technology</option>
+                          <option value="🎁 Gifts">🎁 Gifts</option>
+                          <option value="💼 Business">💼 Business</option>
+                          <option value="🔧 Other">🔧 Other</option>
                         </Form.Select>
                       </Form.Group>
 
@@ -384,10 +437,19 @@ const Home = () => {
             )}
 
             <div className="containerBtn">
-              <Button variant="primary" onClick={handleReset}>
-                Reset Filter
+              <Button onClick={handleReset} className="custom-reset-btn">
+                🔄 Reset Filter
               </Button>
             </div>
+            
+            {/* Dashboard Widgets */}
+            <DashboardWidgets transactions={transactions} user={cUser} />
+            
+            {/* Budget Tracker Section */}
+            {showBudgets && (
+              <BudgetTracker transactions={transactions} user={cUser} />
+            )}
+            
             {view === "table" ? (
               <>
                 <TableData data={transactions} user={cUser} />
@@ -398,6 +460,7 @@ const Home = () => {
               </>
             )}
             <ToastContainer />
+            <NotificationSystem transactions={transactions} budgets={budgets} />
           </Container>
         </>
       )}

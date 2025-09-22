@@ -5,7 +5,9 @@
     align-items: center;
     justify-content: space-between !important;
     width: 100vw;
-    
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 
@@ -22,14 +24,37 @@
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
   } */
 
-/* 
-  @media only screen and (max-width: 600px) {
+.navTitle {
+    font-weight: 700 !important;
+    font-size: 1.5rem !important;
+    background: linear-gradient(45deg, #fff, #f0f8ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.custom-btn {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a24) !important;
+    border: none !important;
+    border-radius: 25px !important;
+    padding: 8px 20px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3) !important;
+}
+
+.custom-btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4) !important;
+}
+
+@media only screen and (max-width: 600px) {
     .navbarCSS {
-        padding: 0px 0px !important;
+        padding: 10px 15px !important;
     }
     .navTitle{
-        font-size: 16px !important;
+        font-size: 1.2rem !important;
     }
-
-  } */
+}
 

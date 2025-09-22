@@ -1,0 +1,330 @@
+.dashboard-widgets {
+  margin-bottom: 30px;
+}
+
+.welcome-card {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+.welcome-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea, #764ba2, #4ecdc4, #ff6b6b);
+}
+
+.welcome-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.welcome-title {
+  color: white;
+  font-weight: 700;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.welcome-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 5px 0 0 0;
+  font-size: 0.95rem;
+}
+
+.balance-display {
+  text-align: right;
+}
+
+.balance-amount {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.balance-amount.positive {
+  color: #00b894;
+}
+
+.balance-amount.negative {
+  color: #e17055;
+}
+
+.balance-label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stats-grid {
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  transition: all 0.3s ease;
+}
+
+.income-card::before {
+  background: linear-gradient(90deg, #00b894, #00cec9);
+}
+
+.expense-card::before {
+  background: linear-gradient(90deg, #e17055, #fd79a8);
+}
+
+.transaction-card::before {
+  background: linear-gradient(90deg, #6c5ce7, #a29bfe);
+}
+
+.average-card::before {
+  background: linear-gradient(90deg, #fdcb6e, #e17055);
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.stat-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 5px 0;
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  opacity: 0.8;
+}
+
+.stat-details {
+  flex: 1;
+}
+
+.stat-value {
+  color: white;
+  font-weight: 700;
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.stat-label {
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.insights-row {
+  margin-bottom: 20px;
+}
+
+.insight-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.insight-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.insight-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.insight-title {
+  color: white;
+  font-weight: 600;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.trend-badge {
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.trend-badge.up {
+  background: linear-gradient(45deg, #e17055, #fd79a8);
+  color: white;
+}
+
+.trend-badge.down {
+  background: linear-gradient(45deg, #00b894, #00cec9);
+  color: white;
+}
+
+.trend-badge.neutral {
+  background: linear-gradient(45deg, #6c5ce7, #a29bfe);
+  color: white;
+}
+
+.spending-comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.spending-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.spending-label {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+.spending-value {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.spending-value.current {
+  color: #fd79a8;
+}
+
+.spending-value.previous {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.top-category {
+  text-align: center;
+}
+
+.category-display {
+  margin-bottom: 10px;
+}
+
+.category-name {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.category-description {
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.no-data {
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .welcome-card,
+[data-theme="light"] .stat-card,
+[data-theme="light"] .insight-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(116, 185, 255, 0.3);
+}
+
+[data-theme="light"] .welcome-title,
+[data-theme="light"] .stat-value,
+[data-theme="light"] .insight-title,
+[data-theme="light"] .category-name {
+  color: #2d3436 !important;
+}
+
+[data-theme="light"] .welcome-subtitle,
+[data-theme="light"] .stat-label,
+[data-theme="light"] .spending-label,
+[data-theme="light"] .category-description {
+  color: #636e72 !important;
+}
+
+[data-theme="light"] .spending-value.previous,
+[data-theme="light"] .no-data {
+  color: #636e72 !important;
+}
+
+[data-theme="light"] .balance-label {
+  color: #636e72 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .welcome-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .balance-display {
+    text-align: center;
+  }
+  
+  .balance-amount {
+    font-size: 1.8rem;
+  }
+  
+  .welcome-title {
+    font-size: 1.3rem;
+  }
+  
+  .stat-content {
+    gap: 10px;
+  }
+  
+  .stat-icon {
+    font-size: 2rem;
+  }
+  
+  .stat-value {
+    font-size: 1.1rem;
+  }
+  
+  .spending-item {
+    padding: 5px 0;
+  }
+}

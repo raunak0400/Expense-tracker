@@ -3,13 +3,17 @@
     align-items: center;
     justify-content: space-between;
     padding: 20px;
-
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    border-radius: 15px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .data-table {
     border-collapse: collapse;
-  }
-  
+}
+
 .data-table thead th {
     background-color: #f5f5f5;
 }
@@ -30,15 +34,6 @@
     gap: 10px;
     margin-bottom: 10px;
 }
-  
-/* .data-table tbody tr:hover {
-    background-color: #f5f5f5;
-    cursor: pointer;
-}
-  
-.data-table tbody tr:nth-child(even) {
-    background-color: #f8f8f8;
-} */
 
 .containerBtn{
     display: flex;
@@ -48,6 +43,7 @@
     width: 100%;
     margin-left: 20px;
 }
+
 .mobileBtn{
     display: none !important;
 }
@@ -58,19 +54,118 @@
     justify-content: center;
     gap: 10px;
     padding: 10px;
-    border: 2px solid white;
-    border-radius: 8px;
-    
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
 
+.iconBtnBox:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
 .iconActive{
-    background-color: white;
-    color: black;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 8px;
+    padding: 8px;
+    transition: all 0.3s ease;
 }
+
 .iconDeactive{
-    background-color: rgb(78, 74, 78);
-    color: black;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    padding: 8px;
+    transition: all 0.3s ease;
+}
+
+.custom-form-select {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 2px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 10px !important;
+    color: white !important;
+    backdrop-filter: blur(5px) !important;
+    transition: all 0.3s ease !important;
+}
+
+.custom-form-select:focus {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: #667eea !important;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25) !important;
+    color: white !important;
+}
+
+.custom-form-select option {
+    background: #2c3e50 !important;
+    color: white !important;
+}
+
+.custom-add-btn {
+    background: linear-gradient(45deg, #4ecdc4, #44a08d) !important;
+    border: none !important;
+    border-radius: 25px !important;
+    padding: 10px 25px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3) !important;
+}
+
+.custom-add-btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4) !important;
+}
+
+.custom-reset-btn {
+    background: linear-gradient(45deg, #ff7675, #fd79a8) !important;
+    border: none !important;
+    border-radius: 25px !important;
+    padding: 10px 25px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(255, 118, 117, 0.3) !important;
+}
+
+.custom-reset-btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(255, 118, 117, 0.4) !important;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.export-btn {
+    background: linear-gradient(45deg, #6c5ce7, #a29bfe) !important;
+    border: none !important;
+    border-radius: 25px !important;
+    padding: 10px 20px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3) !important;
+    color: white !important;
+}
+
+.export-btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4) !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .action-buttons {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .export-btn {
+        padding: 8px 16px !important;
+        font-size: 0.9rem !important;
+    }
 }
 
 @media only screen and (max-width: 600px) {

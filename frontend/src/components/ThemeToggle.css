@@ -1,0 +1,115 @@
+.theme-toggle-btn {
+  background: linear-gradient(45deg, #ffeaa7, #fdcb6e) !important;
+  border: none !important;
+  border-radius: 50% !important;
+  width: 45px !important;
+  height: 45px !important;
+  font-size: 1.2rem !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 15px rgba(255, 234, 167, 0.3) !important;
+  margin-left: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.theme-toggle-btn:hover {
+  transform: rotate(180deg) scale(1.1) !important;
+  box-shadow: 0 6px 20px rgba(255, 234, 167, 0.5) !important;
+}
+
+.theme-toggle-btn:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 234, 167, 0.5) !important;
+}
+
+/* Light theme styles */
+[data-theme="light"] {
+  --bg-primary: linear-gradient(135deg, #74b9ff, #0984e3);
+  --bg-secondary: rgba(116, 185, 255, 0.1);
+  --text-primary: #2d3436;
+  --text-secondary: #636e72;
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --border-color: rgba(116, 185, 255, 0.3);
+}
+
+[data-theme="light"] body {
+  background: linear-gradient(135deg, #74b9ff, #0984e3);
+  color: #2d3436;
+}
+
+[data-theme="light"] .navbarCSS {
+  background: linear-gradient(135deg, #74b9ff, #0984e3) !important;
+}
+
+[data-theme="light"] .filterRow {
+  background: rgba(116, 185, 255, 0.1);
+  border: 1px solid rgba(116, 185, 255, 0.3);
+}
+
+[data-theme="light"] .budget-overview-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(116, 185, 255, 0.3);
+}
+
+[data-theme="light"] .budget-category-card {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(116, 185, 255, 0.2);
+}
+
+[data-theme="light"] .text-white {
+  color: #2d3436 !important;
+}
+
+[data-theme="light"] .custom-form-select {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 2px solid rgba(116, 185, 255, 0.3) !important;
+  color: #2d3436 !important;
+}
+
+[data-theme="light"] .custom-form-select:focus {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: #74b9ff !important;
+  color: #2d3436 !important;
+}
+
+[data-theme="light"] .iconBtnBox {
+  background: rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(116, 185, 255, 0.4);
+}
+
+[data-theme="light"] .iconDeactive {
+  color: #636e72;
+}
+
+[data-theme="light"] .category-name,
+[data-theme="light"] .budget-title {
+  color: #2d3436 !important;
+}
+
+[data-theme="light"] .budget-stat h5 {
+  color: #636e72 !important;
+}
+
+/* Dark theme styles (default) */
+[data-theme="dark"] {
+  --bg-primary: linear-gradient(135deg, #667eea, #764ba2);
+  --bg-secondary: rgba(102, 126, 234, 0.1);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.8);
+  --card-bg: rgba(255, 255, 255, 0.1);
+  --border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] body {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #ffffff;
+}
+
+/* Particles background adjustment for light theme */
+[data-theme="light"] #tsparticles {
+  opacity: 0.3;
+}
+
+[data-theme="dark"] #tsparticles {
+  opacity: 1;
+}

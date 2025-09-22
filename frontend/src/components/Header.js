@@ -5,6 +5,7 @@ import "./style.css";
 import { useNavigate } from 'react-router-dom';
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
+import ThemeToggle from './ThemeToggle';
 const Header = () => {
   
 const navigate = useNavigate();
@@ -65,7 +66,7 @@ const navigate = useNavigate();
               },
             },
             color: {
-              value: '#ffcc00',
+              value: ['#667eea', '#764ba2', '#ff6b6b', '#4ecdc4'],
             },
             shape: {
               type: 'circle',
@@ -113,7 +114,7 @@ const navigate = useNavigate();
       />
     <Navbar className="navbarCSS" collapseOnSelect expand="lg" style={{position: 'relative', zIndex: "2 !important"}}>
       {/* <Navbar className="navbarCSS" collapseOnSelect expand="lg" bg="dark" variant="dark"> */}
-        <Navbar.Brand href="/" className="text-white navTitle">Expense Management System</Navbar.Brand>
+        <Navbar.Brand href="/" className="navTitle">💰 FinanceFlow Pro</Navbar.Brand>
         <Navbar.Toggle
             aria-controls="basic-navbar-nav"
             style={{
@@ -132,15 +133,17 @@ const navigate = useNavigate();
         <Navbar.Collapse id="responsive-navbar-nav" style={{color: "white"}}>
           {user ? (
             <>
-            <Nav>
-                <Button variant="primary" onClick={handleShowLogout} className="ml-2">Logout</Button>
+            <Nav className="d-flex align-items-center">
+                <ThemeToggle />
+                <Button onClick={handleShowLogout} className="ml-2 custom-btn">Logout</Button>
               </Nav>
             </>
           ) : (
 
             <>
-              <Nav>
-                <Button variant="primary" onClick={handleShowLogin} className="ml-2">Login</Button>
+              <Nav className="d-flex align-items-center">
+                <ThemeToggle />
+                <Button onClick={handleShowLogin} className="ml-2 custom-btn">Login</Button>
               </Nav>
             </>
           )}
