@@ -1,11 +1,32 @@
 import User from "../models/UserSchema.js";
 import bcrypt from "bcrypt";
+import mongoose from "mongoose";
 
 export const registerControllers = async (req, res, next) => {
     try{
+        console.log('🚀 Registration attempt started');
+        console.log('Request body:', req.body);
+        console.log('MongoDB connection state:', mongoose.connection.readyState);
+        
+        // Wait for database connection if not connected
+        if (mongoose.connection.readyState !== 1) {
+            console.log('⏳ Waiting for database connection...');
+            await new Promise((resolve, reject) => {
+                if (mongoose.connection.readyState === 1) {
+                    resolve();
+                } else {
+                    mongoose.connection.once('connected', resolve);
+                    mongoose.connection.once('error', reject);
+                    // Timeout after 10 seconds
+                    setTimeout(() => reject(new Error('Database connection timeout')), 25000);
+                }
+            });
+            console.log('✅ Database connected!');
+        }
+        
         const {name, email, password} = req.body;
 
-        // console.log(name, email, password);
+        console.log('Extracted data:', {name, email, password: password ? '[HIDDEN]' : 'undefined'});
 
         if(!name || !email || !password){
             return res.status(400).json({
@@ -51,6 +72,24 @@ export const registerControllers = async (req, res, next) => {
 }
 export const loginControllers = async (req, res, next) => {
     try{
+        console.log('🔑 Login attempt started');
+        console.log('MongoDB connection state:', mongoose.connection.readyState);
+        
+        // Wait for database connection if not connected
+        if (mongoose.connection.readyState !== 1) {
+            console.log('⏳ Waiting for database connection...');
+            await new Promise((resolve, reject) => {
+                if (mongoose.connection.readyState === 1) {
+                    resolve();
+                } else {
+                    mongoose.connection.once('connected', resolve);
+                    mongoose.connection.once('error', reject);
+                    setTimeout(() => reject(new Error('Database connection timeout')), 25000);
+                }
+            });
+            console.log('✅ Database connected!');
+        }
+        
         const { email, password } = req.body;
 
         // console.log(email, password);

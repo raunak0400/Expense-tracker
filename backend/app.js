@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import mongoose from "mongoose";
 import { connectDB } from "./DB/Database.js";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
@@ -16,11 +17,20 @@ const app = express();
 // Use PORT from environment or default to 5000
 const port = process.env.PORT || 5000;
 
-connectDB();
+// Connect to database with error handling
+let dbConnected = false;
+connectDB().then(() => {
+  dbConnected = true;
+  console.log('🎉 Database connection successful!');
+}).catch((error) => {
+  console.error('❌ Failed to connect to database:', error.message);
+  dbConnected = false;
+});
 
 // CORS configuration - allow multiple origins for production
 const allowedOrigins = [
   process.env.FRONTEND_URL, // Main production URL
+  "https://financeflow-pro-frontend.vercel.app", // Add your actual frontend URL
   "https://main.d1sj7cd70hlter.amplifyapp.com",
   "https://expense-tracker-app-three-beryl.vercel.app",
   "http://localhost:3000", // Development
@@ -29,30 +39,20 @@ const allowedOrigins = [
 
 // Middleware
 app.use(express.json());
-// Enhanced CORS setup for production
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (mobile apps, curl, etc.)
-      if (!origin) return callback(null, true);
-      
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-      
-      // In development, allow localhost
-      if (process.env.NODE_ENV === 'development' && origin.includes('localhost')) {
-        return callback(null, true);
-      }
-      
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token"],
-  })
-);
+// Very permissive CORS for testing
+app.use(cors());
+
+// Add these headers manually
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
 // Enhanced security middleware
 app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" },
@@ -91,19 +91,82 @@ app.get("/api/health", (req, res) => {
     status: "OK",
     uptime: process.uptime(),
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
+    environment: process.env.NODE_ENV || 'development',
+    mongoConnected: mongoose.connection.readyState === 1,
+    hasMongoURI: !!process.env.MONGO_URI
   });
 });
 
-// Global error handler
+// Debug route to check environment (remove after fixing)
+app.get("/api/debug", (req, res) => {
+  const mongoURI = process.env.MONGO_URI;
+  res.json({
+    nodeEnv: process.env.NODE_ENV,
+    hasMongoURI: !!mongoURI,
+    hasJWTSecret: !!process.env.JWT_SECRET,
+    mongoState: mongoose.connection.readyState,
+    mongoStateText: {
+      0: 'disconnected',
+      1: 'connected',
+      2: 'connecting',
+      3: 'disconnecting'
+    }[mongoose.connection.readyState],
+    mongoURI: mongoURI ? `mongodb+srv://${mongoURI.split('@')[1]}` : 'Not set',
+    connectionHost: mongoose.connection.host || 'Not connected'
+  });
+});
+
+// Simple test registration endpoint
+app.post("/api/test-register", async (req, res) => {
+  try {
+    console.log('🧪 Test registration started');
+    console.log('Request body:', req.body);
+    console.log('MongoDB state:', mongoose.connection.readyState);
+    
+    const { name, email, password } = req.body;
+    
+    if (!name || !email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing fields",
+        received: { name: !!name, email: !!email, password: !!password }
+      });
+    }
+    
+    // Test if we can connect to User model
+    const User = mongoose.model('User');
+    console.log('User model loaded:', !!User);
+    
+    res.json({
+      success: true,
+      message: "Test registration endpoint working",
+      mongoConnected: mongoose.connection.readyState === 1,
+      data: { name, email, password: '[HIDDEN]' }
+    });
+    
+  } catch (error) {
+    console.error('❌ Test registration error:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      stack: error.stack
+    });
+  }
+});
+
+// Global error handler with detailed logging
 app.use((err, req, res, next) => {
-  console.error('Error:', err.stack);
+  console.error('❌ Error occurred:');
+  console.error('Path:', req.path);
+  console.error('Method:', req.method);
+  console.error('Error:', err.message);
+  console.error('Stack:', err.stack);
+  
   res.status(500).json({
     success: false,
-    message: process.env.NODE_ENV === 'production' 
-      ? 'Something went wrong!' 
-      : err.message,
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+    message: 'Something went wrong!',
+    error: err.message,
+    path: req.path
   });
 });
 
