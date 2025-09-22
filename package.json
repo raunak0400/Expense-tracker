@@ -1,0 +1,35 @@
+{
+  "name": "financeflow-pro",
+  "version": "1.0.0",
+  "description": "Advanced Expense Management System with Modern UI and Smart Features",
+  "main": "backend/app.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backend && npm run dev",
+    "client": "cd frontend && npm start",
+    "build": "cd frontend && npm run build",
+    "start": "cd backend && npm start",
+    "install-deps": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "heroku-postbuild": "cd frontend && npm install && npm run build",
+    "docker:build": "docker build -t financeflow-pro .",
+    "docker:run": "docker run -p 5000:5000 --env-file backend/.env financeflow-pro"
+  },
+  "keywords": [
+    "expense-tracker",
+    "finance",
+    "budget",
+    "mern-stack",
+    "react",
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.0.1"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}

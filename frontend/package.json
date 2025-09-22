@@ -1,7 +1,8 @@
 {
-  "name": "frontend",
-  "version": "0.1.0",
+  "name": "financeflow-pro-frontend",
+  "version": "1.0.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
@@ -29,9 +30,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && echo 'Build completed successfully'",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:prod": "GENERATE_SOURCEMAP=false react-scripts build",
+    "analyze": "npm run build && npx serve -s build",
+    "preview": "npx serve -s build -l 3001"
   },
   "eslintConfig": {
     "extends": [
