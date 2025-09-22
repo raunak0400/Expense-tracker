@@ -1,0 +1,44 @@
+# Development Dockerfile for FinanceFlow Pro
+FROM node:18-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Install development tools
+RUN apk add --no-cache git curl
+
+# Create app user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S financeflow -u 1001 -G nodejs
+
+# Install global development dependencies
+RUN npm install -g nodemon concurrently
+
+# Copy package files for both frontend and backend
+COPY package*.json ./
+COPY backend/package*.json ./backend/
+COPY frontend/package*.json ./frontend/
+
+# Install dependencies
+RUN npm install
+RUN cd backend && npm install
+RUN cd frontend && npm install
+
+# Copy source code
+COPY . .
+
+# Change ownership to app user
+RUN chown -R financeflow:nodejs /app
+
+# Switch to non-root user
+USER financeflow
+
+# Expose ports
+EXPOSE 3000 5000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+  CMD curl -f http://localhost:5000/api/health || exit 1
+
+# Start development servers
+CMD ["npm", "run", "dev"]
