@@ -198,7 +198,7 @@ Add badges from somewhere like: [shields.io](https://shields.io/)
 Insert gif or link to demo
 
 
-## License
+## Licenses
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
